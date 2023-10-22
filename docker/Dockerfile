@@ -1,7 +1,7 @@
 FROM alpine:latest
 #FROM python:3.10.13-alpine
 RUN apk add --no-cache libffi-dev \
-    && apk add --no-cache $(echo $(wget --no-check-certificate -qO- https://git.werls.top/root/nas-tools/-/raw/2.9.1-v/package_list.txt )) \
+    && apk add --no-cache $(echo $(wget --no-check-certificate -qO- https://git.werls.top/root/nas-tools/-/raw/master/package_list.txt )) \
     && ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \
     && echo "${TZ}" > /etc/timezone \
     && ln -sf /usr/bin/python3 /usr/bin/python \
@@ -11,7 +11,7 @@ RUN apk add --no-cache libffi-dev \
     && chmod +x /usr/bin/mc \
     && pip install --upgrade pip setuptools wheel \
     && pip install cython \
-    && pip install -r https://git.werls.top/root/nas-tools/-/raw/2.9.1-v/requirements.txt \
+    && pip install -r https://git.werls.top/root/nas-tools/-/raw/master/requirements.txt \
     && apk del libffi-dev \
     && npm install pm2 -g \
     && rm -rf /tmp/* /root/.cache /var/cache/apk/*
