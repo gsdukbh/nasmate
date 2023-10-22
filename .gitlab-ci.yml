@@ -10,7 +10,7 @@ docker-build:
     - docker:dind
   variables:
     IMAGE_TAG: "$DOCKER_NAME/$CI_PROJECT_NAME:$CI_COMMIT_TAG"
-    LATEST: "$DOCKER_NAME/$CI_PROJECT_NAME:2.9.1"
+    LATEST: "$DOCKER_NAME/$CI_PROJECT_NAME:latest"
 
   before_script:
     - docker login -u $DOCKER_NAME -p $DOCKER_PASSWORD
