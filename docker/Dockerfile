@@ -1,5 +1,5 @@
-#FROM alpine:latest
-FROM python:3.10.13-alpine
+FROM alpine:latest
+#FROM python:3.10.13-alpine
 RUN apk add --no-cache libffi-dev \
     && apk add --no-cache $(echo $(wget --no-check-certificate -qO- https://git.werls.top/root/nas-tools/-/raw/2.9.1-v/package_list.txt )) \
     && ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \
@@ -30,14 +30,13 @@ ENV LANG="C.UTF-8" \
     UMASK=000 \
     WORKDIR="/nas-tools"
 WORKDIR ${WORKDIR}
-COPY . ${WORKDIR}
 RUN  python_ver=$(python3 -V | awk '{print $2}') \
-    && echo "${WORKDIR}/" > /usr/local/lib/python${python_ver%.*}/site-packages/nas-tools.pth \
+    && echo "${WORKDIR}/" > /usr/lib/python${python_ver%.*}/site-packages/nas-tools.pth \
     && echo 'fs.inotify.max_user_watches=524288' >> /etc/sysctl.conf \
     && echo 'fs.inotify.max_user_instances=524288' >> /etc/sysctl.conf
-#    && git config --global pull.ff only \
-#    && git clone -b 2.9.1-v ${REPO_URL} ${WORKDIR} --depth=1 --recurse-submodule \
-#    && git config --global --add safe.directory ${WORKDIR}
+    && git config --global pull.ff only \
+    && git clone -b master ${REPO_URL} ${WORKDIR} --depth=1 --recurse-submodule \
+    && git config --global --add safe.directory ${WORKDIR}
 EXPOSE 3000
 VOLUME ["/config"]
 ENTRYPOINT ["/nas-tools/docker/entrypoint.sh"]
