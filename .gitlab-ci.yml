@@ -1,0 +1,24 @@
+
+stages:
+  - build
+
+docker-build:
+  # Use the official docker image.
+  image: docker:cli
+  stage: build
+  services:
+    - docker:dind
+  variables:
+    IMAGE_TAG: "$DOCKER_NAME/$CI_PROJECT_NAME:$CI_COMMIT_TAG"
+    LATEST: "$DOCKER_NAME/$CI_PROJECT_NAME:latest"
+
+  before_script:
+    - docker login -u $DOCKER_NAME -p $DOCKER_PASSWORD
+  # All branches are tagged with $DOCKER_IMAGE_NAME (defaults to commit ref slug)
+  # Default branch is also tagged with `latest`
+  script:
+    - docker buildx ls
+    - docker run --privileged --rm tonistiigi/binfmt --install all
+    - docker buildx create --use --name mybuilder
+    - docker buildx  build --platform  linux/amd64,linux/arm64 --push -t $LATEST -f ./docker/Dockerfile ./
+
