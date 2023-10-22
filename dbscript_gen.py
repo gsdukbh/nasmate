@@ -10,3 +10,5 @@ alembic_cfg = AlembicConfig()
 alembic_cfg.set_main_option('script_location', script_location)
 alembic_cfg.set_main_option('sqlalchemy.url', f"sqlite:///{db_location}")
 alembic_revision(alembic_cfg, db_version, True)
+# python3-dev
+# py3-pip
