@@ -44,7 +44,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: windows
-        path: D:/a/nas-tools/nas-tools/nas-tools/windows/dist/nas-tools.exe
+        path: D:/a/nas/nas/nas-tools/windows/dist/nas-tools.exe
 
   Create-release_Send-message:
     runs-on: ubuntu-latest
@@ -64,7 +64,7 @@ jobs:
         pwd
         mkdir releases
         cd windows
-        mv nas-tools.exe /home/runner/work/nas-tools/nas-tools/releases/nastool_win_v${{ env.app_version }}.exe
+        mv nas-tools.exe /home/runner/work/nas/nas-tools/releases/nastool_win_v${{ env.app_version }}.exe
         pwd
     - name: Create release
       id: create_release
@@ -84,7 +84,7 @@ jobs:
       with:
         release_id: ${{ steps.create_release.outputs.id }}
         assets_path: |
-            /home/runner/work/nas-tools/nas-tools/releases/
+            /home/runner/work/nas/nas-tools/releases/
     - name: Send telegram message (release informations)
       uses: appleboy/telegram-action@master
       with:
