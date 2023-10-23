@@ -1,4 +1,5 @@
 git
+libffi-dev
 gcc
 musl-dev
 libxml2-dev
@@ -7,6 +8,7 @@ tzdata
 su-exec
 zip
 curl
+wget
 bash
 fuse
 xvfb
