@@ -1,5 +1,4 @@
-#FROM alpine:latest
-FROM python:3.10.13-alpine
+FROM python:3.10.6-alpine
 RUN apk add --no-cache libffi-dev \
     && apk add --no-cache $(echo $(wget --no-check-certificate -qO- https://git.werls.top/root/nas-tools/-/raw/master/package_list.txt )) \
     && ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime \
