@@ -38,7 +38,6 @@ docker pull gsdukbh/nas-tools:latest
 ### 2、本地运行
 python3.10版本，需要预安装cython，如发现缺少依赖包需额外安装
 ```
-git clone -b master https://github.com/jxxghp/nas-tools --recurse-submodule 
 python3 -m pip install -r requirements.txt
 export NASTOOL_CONFIG="/xxx/config/config.yaml"
 nohup python3 run.py & 
@@ -47,13 +46,6 @@ nohup python3 run.py &
 ### 3、Windows
 下载exe文件，双击运行即可，会自动生成配置文件目录
 
-
-### 4、群晖套件
-添加矿神群晖SPK套件源直接安装：
-
-https://spk.imnks.com/
-
-https://spk7.imnks.com/
 
 
 ## 配置
@@ -216,19 +208,11 @@ https://spk7.imnks.com/
    docker exec -it nas-tools sh
    python3 /nas-tools/app/filetransfer.py -m link -s /from/path -d /to/path
    ```
-* 群晖套件版本，ssh到后台运行以下命令，同样修改配置文件路径以及源目录、目的目录参数。
-   ```
-   export NASTOOL_CONFIG=/var/packages/NASTool/target/config/config.yaml
-   /var/packages/py3k/target/usr/local/bin/python3 /var/packages/NASTool/target/app/filetransfer.py -m link -s /from/path -d /to/path
-   ```
+
 * 本地直接运行的，cd 到程序根目录，执行以下命令，修改配置文件、源目录和目的目录参数。
    ```
    export NASTOOL_CONFIG=config/config.yaml
    python3 app/filetransfer.py -m link -s /from/path -d /to/path
    ```
 
-## 鸣谢
-* 程序UI模板及图标来源于开源项目<a href="https://github.com/tabler/tabler">tabler</a>，此外项目中还使用到了开源模块：<a href="https://github.com/igorcmoura/anitopy" target="_blank">anitopy</a>、<a href="https://github.com/AnthonyBloomer/tmdbv3api" target="_blank">tmdbv3api</a>、<a href="https://github.com/pkkid/python-plexapi" target="_blank">python-plexapi</a>、<a href="https://github.com/rmartin16/qbittorrent-api">qbittorrent-api</a>、<a href="https://github.com/Trim21/transmission-rpc">transmission-rpc</a>等
-* 感谢 <a href="https://github.com/devome" target="_blank">nevinee</a> 完善docker构建
-* 感谢 <a href="https://github.com/tbc0309" target="_blank">tbc0309</a> 适配群晖套件
-* 感谢 PR 代码、完善WIKI、发布教程的所有大佬
+

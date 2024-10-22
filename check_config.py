@@ -45,7 +45,7 @@ def check_config():
         ssl_cert = Config().get_config('app').get('ssl_cert')
         ssl_key = Config().get_config('app').get('ssl_key')
         if not ssl_cert or not ssl_key:
-            print("未启用https，请使用 http://IP:%s 访问管理页面" % str(web_port))
+            print("未启用https，请使用 http://127.0.0.1:%s 访问管理页面" % str(web_port))
         else:
             if not os.path.exists(ssl_cert):
                 print("ssl_cert文件不存在：%s" % ssl_cert)
