@@ -1,4 +1,5 @@
 import os
+import re
 import shutil
 import sys
 from threading import Lock
@@ -49,11 +50,14 @@ DEFAULT_TMDB_IMAGE = 'https://s3.bmp.ovh/imgs/2022/07/10/77ef9500c851935b.webp'
 # 默认微信消息代理服务器地址
 DEFAULT_WECHAT_PROXY = 'https://wechat.nastool.cn'
 # 默认OCR识别服务地址
-DEFAULT_OCR_SERVER = 'https://nastool.cn'
+DEFAULT_OCR_SERVER = ''
 # 默认TMDB代理服务地址
-DEFAULT_TMDB_PROXY = 'https://tmdb.nastool.cn'
+DEFAULT_TMDB_PROXY = ''
 # 默认CookieCloud服务地址
-DEFAULT_COOKIECLOUD_SERVER = 'http://nastool.cn:8088'
+DEFAULT_COOKIECLOUD_SERVER = ''
+# TMDB域名地址
+TMDB_API_DOMAINS = ['api.themoviedb.org', 'api.tmdb.org']
+TMDB_IMAGE_DOMAIN = 'image.tmdb.org'
 # TMDB图片地址
 TMDB_IMAGE_W500_URL = 'https://image.tmdb.org/t/p/w500%s'
 TMDB_IMAGE_ORIGINAL_URL = 'https://image.tmdb.org/t/p/original%s'
@@ -171,6 +175,24 @@ class Config(object):
 
     def get_temp_path(self):
         return os.path.join(self.get_config_path(), "temp")
+
+    def get_tmdbapi_url(self):
+        tmdb_domain = self.get_config('app').get('tmdb_domain')
+        if tmdb_domain and isinstance(tmdb_domain, str):
+            tmdb_domain = re.sub(r'^https?://', '', tmdb_domain)
+            tmdb_domain = re.sub(r'/$', '', tmdb_domain)
+        else:
+            tmdb_domain = TMDB_API_DOMAINS[0]
+
+        return f"https://{tmdb_domain}/3"
+
+    def get_tmdbimage_url(self, path, prefix="w500"):
+        if not path:
+            return ""
+        tmdb_image_url = self.get_config("app").get("tmdb_image_url")
+        if tmdb_image_url:
+            return tmdb_image_url + f"/t/p/{prefix}{path}"
+        return f"https://{TMDB_IMAGE_DOMAIN}/t/p/{prefix}{path}"
 
     @staticmethod
     def get_root_path():
