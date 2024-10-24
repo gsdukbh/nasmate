@@ -194,7 +194,7 @@
                                     <div class="col">
                                       <a href='javascript:show_download_modal("{{ torrent.id }}","【{{ torrent.site }}】{{ torrent.torrent_name }}","{{ torrent.site }}")'>{{ torrent.torrent_name }}</a>
                                       <div class="text-muted">
-                                        {{ torrent.description or '' }}
+                                        {{ torrent.description |safe or ''  }}
                                       </div>
                                       <div>
                                         <span class="badge bg-black text-dark-fg mb-1">{{ torrent.site }}</span>

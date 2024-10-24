@@ -20,19 +20,19 @@ app:
   # 【日志级别】：info、debug、error
   loglevel: info
   # 【WEB管理界面监听地址】：如需支持ipv6需设置为::，如::无法访问可改为0.0.0.0
-  web_host: '::'
+  web_host: 127.0.0.1
   # 【WEB管理界面端口】：默认3000
-  web_port: 3000
+  web_port: 8080
   # 【WEB管理页面登录用户】，默认admin
   login_user: admin
   # 【WEB管理页面登录密码】：默认password，如果是全数字密码，要用''括起来
-  login_password: '[hash]pbkdf2:sha256:260000$IshLwWL0zHvS7D1Q$040299fa0f9452816830712849f86d54d3fa98b0bd22f5b2ce9f31dd8b6a6217'
+  login_password: '[hash]pbkdf2:sha256:260000$dYwbu2JaInLQKDYR$db05c5dbf1a19f281f230b9f497c91ef871a8cfbf4d07813ef5a1d9393ce557b'
   # 【WEB管理界面使用的HTTPS的证书和KEY的路径】，留空则不启用HTTPS
   ssl_cert:
   ssl_key:
   # 【TMDB API KEY】：需要在https://www.themoviedb.org/申请，必须配置，否则无法识别媒体资源和重命名
   # 以下地址需要网络能够正常访问：api.themoviedb.org、webservice.fanart.tv
-  rmt_tmdbkey:
+  rmt_tmdbkey: aa42925802d37b7565eb80e3e6e6b9dc
   # 【使用TMDB服务器域名】：api.themoviedb.org、api.tmdb.org，如api.themoviedb.org无法访问可偿试使用api.tmdb.org
   tmdb_domain: api.tmdb.org
   # 【TMDB匹配模式】：normal、strict，normal模式下如使用文件名/种子名中的年份无法匹配到媒体信息，会去掉年份再匹配一次；strict模式则严格按文件中年份匹配
@@ -43,12 +43,13 @@ app:
   proxies:
     http:
     https:
+    ftp: http://127.0.0.1:7890
   # 【本系统的WEB的外网地址】：需要是外网IP或者域名，需要包含端口，用于微信/Telegram信息点击跳转，如不需要可配空
   # 示例：http://IP:3000
   domain: ''
   # 【UserAgent】：可适当修改，用于站点签到、豆瓣数据抓取等
   user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
-    like Gecko) Chrome/98.0.4758.102 Safari/537.36
+    like Gecko) Chrome/120.0.0.0 Safari/537.36
   # 【登录界面壁纸】：themoviedb、bing，设置为themoviedb时需要配置TMDB API Key时才生效
   wallpaper: bing
   # Debug mode
@@ -64,7 +65,7 @@ app:
   - update_userrss.sql
 media:
   # 【媒体库管理软件】：emby、jellyfin、plex，需要在emby或jellyfin或plex区配置详细信息，用于下载检查控重、媒体库展示等，建议配置
-  media_server: emby
+  media_server: jellyfin
   # 【媒体库数据同步周期】：定时同步媒体服务器数据到本地，单位小时
   mediasync_interval: 12
   # 【媒体库电影文件存放目录】：支持配置多个目录，不同的硬盘需映射为不同的根目录，以更于程序区分
@@ -84,11 +85,11 @@ media:
   # 如不需要启动分类，则该项配置为空
   category: default-category
   # 【转移到媒体库的最小文件大小】：避免预告片/MV等影响识别，单位M
-  min_filesize: 150
+  min_filesize: '150'
   # 【文件名转移忽略词】：文件名包含忽略词，忽略转移
-  ignored_files:
+  ignored_files: ''
   # 【文件路径转移忽略词】：文件路径包含忽略词，忽略转移
-  ignored_paths:
+  ignored_paths: ''
   # 【洗版开关】：如开启则则新下载了更大的文件会覆盖媒体库目录中已有的文件
   filesize_cover: true
   # 【电影命名定义】：程序会按定义的命名格式对电影进行重命名；/代表上下级目录，{}内为占位符；占位符会使用文件识别出来的实际值替换；占位符外的字符会当成普通字符，直接体现在名称上
@@ -113,9 +114,9 @@ emby:
 # 配置Jellyfin服务器信息
 jellyfin:
   # 【Jellyfin服务器IP地址和端口】：注意区分http和https，http时可以不加http://，https时必须加https://
-  host: http://127.0.0.1:8096
+  host: http://192.168.1.39:8096
   # 【Jellyfin ApiKey】：在Jellyfin设置->高级->API密钥处生成
-  api_key:
+  api_key: 559a7d5c17f94a67b03f5885c1b72de3
 
 # 配置Plex服务器信息
 plex:
@@ -200,7 +201,7 @@ pt:
   #【聚合检索使用的检索器】：jackett、prowlarr、builtin，需要配置jackett或prowlarr对应的配置区域，builtin为内置索引器需要在配置文件目录/sites目录下存入对应的站点配置文件
   # 1、通过微信发送关键字，实时检索下载，发送格式示例：电视剧 西部世界、西部世界第1季、西部世界第1季第2集、西部世界 2022，只会匹配真实名称，命中后会自动下载，使用说明参考：https://github.com/jxxghp/nas-tools/wiki/
   # 2、使用WEB UI中的搜索界面搜索资源，会识别显示真实名称，并显示媒体图片和评分等信息，会同时匹配种子名称跟真实名称
-  search_indexer: builtin
+  search_indexer: jackett
   # 【内建索引器使用的站点】：只有在该站点列表中内建索引器搜索时才会使用
   indexer_sites:
   # 【远程搜索自动择优下载开关】：如开启则微信等渠道搜索后会自动择优选择一项下载，如不开启则需要手工点击进入WEB页面选择下载
@@ -224,11 +225,11 @@ pt:
 # 【配置Jackett检索器】
 jackett:
   # 【Jackett地址】：Jackett地址和端口，格式：http(s)://IP:PORT
-  host:
+  host: http://192.168.1.39:9117
   # 【Jackett ApiKey】：Jackett配置页面右上角复制API Key
-  api_key:
+  api_key: cfun6zkxrvzvwf86b31725uwregenjb1
   # 【Jackett管理密码】：如未设置可为空
-  password:
+  password: lijiawei
 
 # 【配置prowlarr检索器】
 prowlarr:
@@ -291,9 +292,8 @@ douban:
   # 这里可以是自己的，也可以是别人的，比如填写几个大V的账号ID，实现热门影视自动下载
   users:
   - '156979945'
-  cookie: ' ll="118302"; bid=CHJ3Ezr18lY; viewed="4913064"; push_noty_num=0; push_doumail_num=0;
-    ct=y; douban-fav-remind=1; dbcl2="156979945:Y6XMYq4uUtI"; ck=yJG_; frodotk_db="e6bdf3191a0ecabcb439d94b4e2c6034";
-    ap_v=0,6.0'
+  cookie: viewed="4913064"; douban-fav-remind=1; ll="118310"; bid=4on1BzrMPqk; dbcl2="156979945:nhpyla4El4E";
+    push_noty_num=0; push_doumail_num=0; ck=AvFf; frodotk_db="e630adf2018a372cb29209d6049ea584"
   # 【同步天数】：同步多少天内加入的数据
   days: '30'
   # 【同步间隔】：多久同步一次数据，单位小时，建议不要太频繁，避免被检测到后封号
@@ -355,3 +355,4 @@ laboratory:
   search_en_title: true
   # 【使用TMDB代理】
   tmdb_proxy: false
+test: false
