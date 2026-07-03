@@ -32,10 +32,10 @@ if [ "${NASTOOL_AUTO_UPDATE}" = "true" ]; then
         if [ "${hash_old}" != "${hash_new}" ]; then
             echo "检测到requirements.txt有变化，重新安装依赖..."
             if [ "${NASTOOL_CN_UPDATE}" = "true" ]; then
-                pip install --upgrade pip "setuptools<70.0.0" wheel -i "${PYPI_MIRROR}"
+                pip install --upgrade pip "setuptools<58.0.0" wheel -i "${PYPI_MIRROR}"
                 pip install -r requirements.txt -i "${PYPI_MIRROR}"
             else
-                pip install --upgrade pip "setuptools<70.0.0" wheel
+                pip install --upgrade pip "setuptools<58.0.0" wheel
                 pip install -r requirements.txt
             fi
             if [ $? -ne 0 ]; then
